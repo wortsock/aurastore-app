@@ -23,7 +23,7 @@ Expo (React Native) with Expo Router, Supabase (Auth, Postgres, Realtime, Edge F
 
 ## Build the APK
 `npx eas-cli@latest build -p android --profile preview`
-The two public values above are set in the `preview` profile in `eas.json`. No secret keys are used anywhere in the app.
+The two public values above are set as EAS environment variables (preview environment) on expo.dev, not in the repo. No secret keys are used anywhere in the app.
 
 ## How login and sync work
 - Google sign-in opens in the phone browser through Supabase and returns to the app through the `aurastore://` link. Because the website uses the same Supabase Google provider, the same Google account gives the same user, cart and orders on both.

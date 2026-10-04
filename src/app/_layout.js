@@ -5,6 +5,8 @@ import { AuthProvider, useAuth } from '../context/AuthContext';
 import { CartProvider } from '../context/CartContext';
 import { colors } from '../lib/theme';
 
+const header = { headerShown: true, headerStyle: { backgroundColor: colors.bg }, headerTintColor: colors.text };
+
 function Gate() {
   const { loading } = useAuth();
   if (loading) {
@@ -18,10 +20,9 @@ function Gate() {
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg } }}>
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="login" />
-      <Stack.Screen
-        name="product/[slug]"
-        options={{ headerShown: true, title: '', headerStyle: { backgroundColor: colors.bg }, headerTintColor: colors.text }}
-      />
+      <Stack.Screen name="product/[slug]" options={{ ...header, title: '' }} />
+      <Stack.Screen name="checkout" options={{ ...header, title: 'Checkout' }} />
+      <Stack.Screen name="order/[id]" options={{ ...header, title: 'Order' }} />
     </Stack>
   );
 }

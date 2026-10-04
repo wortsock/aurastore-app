@@ -41,9 +41,9 @@ export default function CartScreen() {
       {fee > 0 ? <Text style={{ color: colors.muted, fontSize: 12, marginTop: 6 }}>{'Add ' + formatNaira(FREE_DELIVERY_THRESHOLD - subtotal) + ' more for free delivery'}</Text> : null}
       <View style={{ height: 1, backgroundColor: colors.border, marginVertical: 10 }} />
       {row('Total', formatNaira(total), true)}
-      <View style={{ marginTop: 14, backgroundColor: colors.surface, borderRadius: 8, height: 46, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: colors.muted, fontWeight: '600' }}>Checkout coming next</Text>
-      </View>
+      <Pressable onPress={() => router.push('/checkout')} style={{ marginTop: 14, backgroundColor: colors.accent, borderRadius: 8, height: 46, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={{ color: '#0f172a', fontWeight: '700', fontSize: 16 }}>Checkout</Text>
+      </Pressable>
     </View>
   ) : null;
 

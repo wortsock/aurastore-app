@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View, Text, Pressable, ActivityIndicator, Alert } from 'react-native';
 import { Redirect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useAuth, redirectTo } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { colors } from '../lib/theme';
 
 export default function Login() {
@@ -31,9 +31,6 @@ export default function Login() {
       >
         {busy ? <ActivityIndicator color="#0f172a" /> : <Text style={{ color: '#0f172a', fontWeight: '700', fontSize: 16 }}>Continue with Google</Text>}
       </Pressable>
-      <Text selectable style={{ color: colors.muted, fontSize: 11, marginTop: 40, textAlign: 'center' }}>
-        debug redirect: {redirectTo}
-      </Text>
     </View>
   );
 }

@@ -1,56 +1,37 @@
-# Welcome to your Expo app 👋
+# AuraStore Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Android app for the AuraStore shop. It uses the same Supabase project, tables, Google login and `place-order` function as the website, so one account and one cart work on both.
 
-## Get started
+Website: https://wortsock.github.io/aurastore/
+Website repo: https://github.com/wortsock/aurastore
 
-1. Install dependencies
+## Features
+- Sign in with Google (same account as the website)
+- Browse products with search and category filters, product details
+- Cart that syncs live with the website in both directions (Supabase Realtime)
+- Checkout (Pay on Delivery), order confirmation email, order history
 
-   ```bash
-   npm install
-   ```
+## Tech
+Expo (React Native) with Expo Router, Supabase (Auth, Postgres, Realtime, Edge Function), built with EAS Build.
 
-2. Start the app
+## Run locally
+1. Install Node.js and run `npm install`
+2. Create a `.env` file (never commit it):
+   - `EXPO_PUBLIC_SUPABASE_URL`
+   - `EXPO_PUBLIC_SUPABASE_ANON_KEY` (the publishable key)
+3. `npx expo start --tunnel`, then open it in Expo Go
 
-   ```bash
-   npx expo start
-   ```
+## Build the APK
+`npx eas-cli@latest build -p android --profile preview`
+The two public values above are set in the `preview` profile in `eas.json`. No secret keys are used anywhere in the app.
 
-In the output, you'll find options to open the app in a
+## How login and sync work
+- Google sign-in opens in the phone browser through Supabase and returns to the app through the `aurastore://` link. Because the website uses the same Supabase Google provider, the same Google account gives the same user, cart and orders on both.
+- The website and the app each write one cart row at a time to the `cart_items` table. Each subscribes to changes on that table and refetches, so a cart change shows on the other within seconds. The app also refetches when it returns to the foreground and every 15 seconds on the Cart tab.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Known limits
+- Android only. Pay on Delivery only.
+- Order emails are sent from a verified Mailgun domain and may land in spam.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Install and test
+Open the APK link from the submission, install it, sign in with Google, then add items to the cart on the website and watch them appear in the app.
